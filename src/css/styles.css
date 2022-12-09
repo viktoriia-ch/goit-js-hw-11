@@ -1,0 +1,150 @@
+:root {
+  --page-font: 'Montserrat', sans-serif;
+  --primary-text-color: #212121;
+  --secondary-text-color: #f9f9fd;
+  --card-set-gap: 20px;
+  --card-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--page-font);
+  background-color: #f9f9fd;
+  color: var(--primary-text-color);
+  line-height: 1.5;
+
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-text-color);
+}
+
+img {
+  display: block;
+
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+}
+
+p {
+  margin: 0;
+}
+
+.search-form {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  background-color: teal;
+  box-shadow: var(--card-shadow);
+
+  display: flex;
+  justify-content: center;
+
+  padding: 8px;
+}
+
+.thumb {
+  position: relative;
+  display: flex;
+}
+
+.search-form input {
+  background-color: #f9f9fd;
+  padding: 5px 10px;
+
+  border-style: none;
+  border-radius: 3px;
+}
+
+.search-form input:focus {
+  outline: 1.5px gray solid;
+}
+
+.btn {
+  position: absolute;
+  top: 6%;
+  right: 1%;
+  width: 30px;
+  height: 23px;
+
+  display: flex;
+  align-items: center;
+
+  background-color: gainsboro;
+  border-style: none;
+  border-radius: 3px;
+}
+
+.btn:hover {
+  background-color: silver;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 60px;
+  margin-left: calc(-1 * var(--card-set-gap));
+}
+
+.photo-card {
+  flex-basis: calc(100% / 4 - var(--card-set-gap));
+
+  margin-left: var(--card-set-gap);
+  margin-bottom: var(--card-set-gap);
+
+  box-shadow: var(--card-shadow);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 5px 10px;
+}
+
+.info-item {
+  font-size: 15px;
+  text-transform: lowercase;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.load-more {
+  display: block;
+  visibility: hidden;
+
+  background-color: teal;
+  color: var(--secondary-text-color);
+  font-size: 15px;
+  border-style: none;
+  border-radius: 4px;
+
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.load-more:hover {
+  background-color: cadetblue;
+}
+
+.is-visibility {
+  visibility: visible;
+}

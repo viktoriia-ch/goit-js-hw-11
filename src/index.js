@@ -14,6 +14,7 @@ const refs = {
   btnLoader: document.querySelector('.load-more'),
 };
 
+let page = 0;
 let valueTrim = '';
 
 // ARROW fUNCTIONS
@@ -41,7 +42,16 @@ const createSmoothScroll = () => {
 };
 
 const onLoadMore = () => {
-  fetchImages(valueTrim).then(images => {
+  fetchImages(valueTrim, page).then(images => {
+    page += 1;
+    const totalPages = images.totalHits / images.hits.length;
+
+    if (totalPages < page) {
+      refs.btnLoader.setAttribute('disabled', true);
+      Notify.info('Images ran out!');
+      return;
+    }
+
     renderImages(images.hits);
     createLightbox().refresh();
     createSmoothScroll();
@@ -55,6 +65,7 @@ const clearContainer = () => {
 
 const onFormSubmit = event => {
   event.preventDefault();
+  page = 1;
 
   const { value } = event.target.elements.searchQuery;
   valueTrim = value.trim();
@@ -67,7 +78,7 @@ const onFormSubmit = event => {
 
   clearContainer();
 
-  fetchImages(valueTrim).then(images => {
+  fetchImages(valueTrim, page).then(images => {
     if (images.hits.length === 0) {
       Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
@@ -76,6 +87,7 @@ const onFormSubmit = event => {
     }
 
     Notify.success(`Hooray! We found ${images.totalHits} images.`);
+    refs.btnLoader.removeAttribute('disabled');
     refs.btnLoader.classList.add('is-visibility');
     renderImages(images.hits);
     createLightbox();

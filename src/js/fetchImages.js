@@ -4,12 +4,8 @@ import { Notify } from 'notiflix';
 const BASE_URL = 'https://pixabay.com/api/';
 const KEY = '31874825-b26954bf3f9b68024b47f53ce';
 
-let page = 1;
-
-export const fetchImages = async value => {
+export const fetchImages = async (value, page) => {
   try {
-    page += 1;
-
     const response = await axios.get(`${BASE_URL}`, {
       params: {
         key: KEY,
@@ -17,7 +13,7 @@ export const fetchImages = async value => {
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
-        per_page: 40,
+        per_page: 100,
         page: page,
       },
     });

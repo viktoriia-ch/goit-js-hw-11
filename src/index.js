@@ -1,4 +1,4 @@
-import { fetchImages } from './js/fetchImages';
+import { fetchImages, perPage } from './js/fetchImages';
 import { getTemplate } from './js/getTemplate';
 import { Notify } from 'notiflix';
 import { icons } from 'feather-icons';
@@ -14,7 +14,7 @@ const refs = {
   btnLoader: document.querySelector('.load-more'),
 };
 
-let page = 0;
+let page = 1;
 let valueTrim = '';
 
 // ARROW fUNCTIONS
@@ -43,18 +43,19 @@ const createSmoothScroll = () => {
 
 const onLoadMore = () => {
   fetchImages(valueTrim, page).then(images => {
-    page += 1;
-    const totalPages = images.totalHits / images.hits.length;
-
-    if (totalPages < page) {
-      refs.btnLoader.setAttribute('disabled', true);
-      Notify.info('Images ran out!');
-      return;
-    }
+    console.log('onLoadMore виконується', page);
+    const totalPages = images.totalHits / perPage;
 
     renderImages(images.hits);
     createLightbox().refresh();
     createSmoothScroll();
+    page += 1;
+    console.log('onLoadMore записалась і порівнюється', page);
+
+    if (totalPages < page) {
+      refs.btnLoader.classList.remove('is-visibility');
+      return;
+    }
   });
 };
 
@@ -79,6 +80,9 @@ const onFormSubmit = event => {
   clearContainer();
 
   fetchImages(valueTrim, page).then(images => {
+    console.log(page);
+    const totalPages = images.totalHits / images.hits.length;
+
     if (images.hits.length === 0) {
       Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
@@ -87,10 +91,13 @@ const onFormSubmit = event => {
     }
 
     Notify.success(`Hooray! We found ${images.totalHits} images.`);
-    refs.btnLoader.removeAttribute('disabled');
-    refs.btnLoader.classList.add('is-visibility');
+    if (totalPages > page) {
+      refs.btnLoader.classList.add('is-visibility');
+    }
+
     renderImages(images.hits);
     createLightbox();
+    page += 1;
   });
 };
 

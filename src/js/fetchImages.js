@@ -3,6 +3,7 @@ import { Notify } from 'notiflix';
 
 const BASE_URL = 'https://pixabay.com/api/';
 const KEY = '31874825-b26954bf3f9b68024b47f53ce';
+export const perPage = 40;
 
 export const fetchImages = async (value, page) => {
   try {
@@ -13,7 +14,7 @@ export const fetchImages = async (value, page) => {
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
-        per_page: 100,
+        per_page: perPage,
         page: page,
       },
     });
